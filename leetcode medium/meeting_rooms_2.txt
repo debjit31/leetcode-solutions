@@ -1,0 +1,25 @@
+class Main {
+
+  public int minMeetingRooms(Interval[] intervals)
+  {
+      if(intervals == null || intervals.length == 0){
+        return 0;
+      }
+      Arrays.sort(intervals, (a,b) -> a.start - b.start);
+      PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+      minHeap.add(intervals[0]);
+      for(int i=1; i< intervals.length; i++)
+      {
+        Interval currentMeeting = intervals[i];
+        Interval prevMeeting = minHeap.remove();
+        if(currentMeeting.start >= prevMeeting.end){
+          prevMeeting.end = currentMeeting.end;
+        }else{
+          minHeap.add(currentMeeting);
+        }
+        minHeap.add(prevMeeting);
+      }
+
+      return minHeap.size();
+  }
+}

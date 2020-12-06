@@ -1,0 +1,22 @@
+class Solution {
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        /* Classic DFS using STACK*/
+        HashSet<Integer> v = new HashSet<>();
+        v.add(0);
+        
+        Stack<Integer> stk = new Stack<>();
+        stk.add(0);
+        while(!stk.isEmpty()){
+            int currentRoom = stk.pop();
+            List<Integer> keys = rooms.get(currentRoom);
+            for(int k : keys){
+                if(!v.contains(k)){
+                    v.add(k);
+                    stk.add(k);
+                }
+            }
+        }
+        return v.size() == rooms.size();
+        
+    }
+}
