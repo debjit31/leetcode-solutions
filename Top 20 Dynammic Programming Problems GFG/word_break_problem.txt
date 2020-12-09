@@ -1,0 +1,29 @@
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int n = s.length();
+        if(n == 0){
+            return true;
+        }
+        int dp[] = new int[n+1];
+        List<Integer> m_index = new ArrayList<>();
+        m_index.add(-1);
+        for(int i = 0; i<n; i++)
+        {
+            int f=0;
+            int mis = m_index.size();
+            for(int j=mis-1; j>=0; j--){
+                String sb = s.substring(m_index.get(j) + 1, m_index.get(j) + 1+i - m_index.get(j));
+                if(wordDict.contains(sb)){
+                    f=1;
+                    break;
+                }
+            }
+            if(f == 1)
+            {
+                dp[i] = 1;
+                m_index.add(i);
+            }
+        }
+        return dp[n - 1] == 1 ? true : false;
+    }
+}
